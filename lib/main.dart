@@ -22,9 +22,7 @@ void main() async {
     routes: <String, WidgetBuilder>{
       '/main': (BuildContext context) => const MyApp(),
       '/cover': (BuildContext context) => const Coverpage(),
-      '/home': (BuildContext context) => const Homepage(
-            title: 'Homepage',
-          )
+      '/home': (BuildContext context) => const Homepage()
     },
   ));
 }
@@ -46,9 +44,7 @@ class _MyApp extends State<MyApp> {
         context,
         PageTransition(
           child: (SpUtil.getBool('kurir', defValue: false)!
-              ? const Homepage(
-                  title: 'Homepage',
-                )
+              ? const Homepage()
               : const Coverpage()),
           type: PageTransitionType.fade,
         ),
