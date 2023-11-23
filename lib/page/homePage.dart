@@ -2,7 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:gastrack_driver/controller/Authcontroller.dart';
+// import 'package:gastrack_driver/controller/Authcontroller.dart';
+import 'package:gastrack_driver/page/settingPage.dart';
+import 'package:page_transition/page_transition.dart';
 // import 'package:shimmer/shimmer.dart';
 // import 'package:sp_util/sp_util.dart';
 // import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -16,7 +18,7 @@ class Homepage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<Homepage> {
-  final LogoutController _controller = LogoutController();
+  // final LogoutController _controller = LogoutController();
   final List<Map> Data = [
     {
       'resi': "SHIP(GTK)-20231104131902nU",
@@ -149,7 +151,12 @@ class _MyHomePageState extends State<Homepage> {
                                 ),
                                 InkWell(
                                   onTap: () {
-                                    _controller.logout();
+                                    Navigator.push(
+                                        context,
+                                        PageTransition(
+                                          child: const Profilsaya(),
+                                          type: PageTransitionType.rightToLeft,
+                                        ));
                                   },
                                   child: Image.asset(
                                     "assets/icon/setting_icon.png",
