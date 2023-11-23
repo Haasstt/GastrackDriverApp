@@ -1,10 +1,12 @@
+// ignore_for_file: library_private_types_in_public_api, file_names
+
 import 'package:flutter/material.dart';
 
 class BounceAnimation extends StatefulWidget {
   final double delay;
   final Widget child;
 
-  BounceAnimation(this.delay, this.child);
+  const BounceAnimation(this.delay, this.child, {super.key});
 
   @override
   _BounceAnimationState createState() => _BounceAnimationState();

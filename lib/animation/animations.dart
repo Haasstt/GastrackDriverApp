@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 // import 'package:simple_animations/simple_animations.dart';
 
@@ -5,7 +7,7 @@ class FadeAnimation extends StatefulWidget {
   final double delay;
   final Widget child;
 
-  FadeAnimation(this.delay, this.child);
+  const FadeAnimation(this.delay, this.child, {super.key});
 
   @override
   _FadeAnimationState createState() => _FadeAnimationState();

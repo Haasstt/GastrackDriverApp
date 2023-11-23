@@ -1,7 +1,9 @@
-// ignore_for_file: depend_on_referenced_packages, non_constant_identifier_names, avoid_print
+// ignore_for_file: depend_on_referenced_packages, non_constant_identifier_names, avoid_print, file_names
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:gastrack_driver/page/isigasPage.dart';
+import 'package:gastrack_driver/page/pesanditerimaPage.dart';
 // import 'package:gastrack_driver/controller/Authcontroller.dart';
 import 'package:gastrack_driver/page/settingPage.dart';
 import 'package:page_transition/page_transition.dart';
@@ -152,11 +154,12 @@ class _MyHomePageState extends State<Homepage> {
                                 InkWell(
                                   onTap: () {
                                     Navigator.push(
-                                        context,
-                                        PageTransition(
-                                          child: const Profilsaya(),
-                                          type: PageTransitionType.rightToLeft,
-                                        ));
+                                      context,
+                                      PageTransition(
+                                        child: const Profilsaya(),
+                                        type: PageTransitionType.rightToLeft,
+                                      ),
+                                    );
                                   },
                                   child: Image.asset(
                                     "assets/icon/setting_icon.png",
@@ -235,7 +238,7 @@ class _MyHomePageState extends State<Homepage> {
                     margin: const EdgeInsets.only(top: 25),
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 255, 255, 255),
+                      color: const Color.fromARGB(255, 255, 255, 255),
                       borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(20),
                         topRight: Radius.circular(20),
@@ -283,7 +286,7 @@ class _MyHomePageState extends State<Homepage> {
                                       horizontal: 10,
                                     ),
                                     padding: const EdgeInsets.symmetric(
-                                      horizontal: 10,
+                                      horizontal: 20,
                                       vertical: 10,
                                     ),
                                     width: double.infinity,
@@ -359,10 +362,10 @@ class _MyHomePageState extends State<Homepage> {
                                                                   ),
                                                                 ),
                                                                 Container(
-                                                                  padding: EdgeInsets
+                                                                  padding: const EdgeInsets
                                                                       .symmetric(
-                                                                          vertical:
-                                                                              5),
+                                                                      vertical:
+                                                                          5),
                                                                   child: Text(
                                                                     '${(index['alamat_perusahaan'])}',
                                                                     style:
@@ -445,8 +448,8 @@ class _MyHomePageState extends State<Homepage> {
                                                   ),
                                                 ),
                                                 Container(
-                                                  margin: const EdgeInsets.only(
-                                                      top: 10),
+                                                  margin: const EdgeInsets.symmetric(
+                                                      vertical: 10),
                                                   child: Row(
                                                     mainAxisAlignment:
                                                         MainAxisAlignment
@@ -456,7 +459,15 @@ class _MyHomePageState extends State<Homepage> {
                                                         flex: 1,
                                                         child: InkWell(
                                                           onTap: () {
-                                                            print("isi gas");
+                                                            Navigator.push(
+                                                              context,
+                                                              PageTransition(
+                                                                child:
+                                                                    const IsigasPage(),
+                                                                type: PageTransitionType
+                                                                    .rightToLeft,
+                                                              ),
+                                                            );
                                                           },
                                                           child: Container(
                                                             height: 40,
@@ -513,8 +524,15 @@ class _MyHomePageState extends State<Homepage> {
                                                         flex: 2,
                                                         child: InkWell(
                                                           onTap: () {
-                                                            print(
-                                                                "pesanan diterima");
+                                                            Navigator.push(
+                                                              context,
+                                                              PageTransition(
+                                                                child:
+                                                                    const PesananDiterimaPage(),
+                                                                type: PageTransitionType
+                                                                    .rightToLeft,
+                                                              ),
+                                                            );
                                                           },
                                                           child: Container(
                                                             height: 40,

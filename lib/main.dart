@@ -1,4 +1,4 @@
-// ignore_for_file: depend_on_referenced_packages, implementation_imports
+// ignore_for_file: depend_on_referenced_packages, implementation_imports, deprecated_member_use
 
 import 'package:flutter/material.dart';
 import 'package:gastrack_driver/page/homepage.dart';
