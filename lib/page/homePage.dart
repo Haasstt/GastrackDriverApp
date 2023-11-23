@@ -1,4 +1,4 @@
-// ignore_for_file: depend_on_referenced_packages, non_constant_identifier_names
+// ignore_for_file: depend_on_referenced_packages, non_constant_identifier_names, avoid_print
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -269,57 +269,312 @@ class _MyHomePageState extends State<Homepage> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                // Expanded(
-                                //   child: Container(
-                                //     margin: EdgeInsets.symmetric(
-                                //       vertical: 10,
-                                //       horizontal: 10,
-                                //     ),
-                                //     width: double.infinity,
-                                //     decoration: BoxDecoration(
-                                //       border: Border.all(
-                                //         width: 1,
-                                //         color: Colors.black38,
-                                //       ),
-                                //       borderRadius: BorderRadius.all(
-                                //         Radius.circular(20),
-                                //       ),
-                                //     ),
-                                //     child: Column(
-                                //       children: Data.map((index) {
-                                //         return Column(
-                                //           crossAxisAlignment:
-                                //               CrossAxisAlignment.start,
-                                //           children: [
-                                //             Text(
-                                //               'Tidak ada pesanan yang harus dikirim',
-                                //               textAlign: TextAlign.center,
-                                //               style: TextStyle(
-                                //                 height: 2,
-                                //                 fontFamily: 'Poppins',
-                                //                 color: Colors.grey,
-                                //                 fontSize: 14,
-                                //               ),
-                                //             ),
-                                //           ],
-                                //         );
-                                //       }).toList(),
-                                //     ),
-                                //   ),
-                                // )
-                                Image.asset(
-                                  "assets/icon/noPengiriman_icon.png",
-                                ),
-                                const Text(
-                                  'Tidak ada pesanan yang harus dikirim',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    height: 2,
-                                    fontFamily: 'Poppins',
-                                    color: Colors.grey,
-                                    fontSize: 14,
+                                Expanded(
+                                  child: Container(
+                                    margin: const EdgeInsets.symmetric(
+                                      vertical: 10,
+                                      horizontal: 10,
+                                    ),
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 10,
+                                      vertical: 10,
+                                    ),
+                                    width: double.infinity,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        width: 1,
+                                        color: Colors.black38,
+                                      ),
+                                      borderRadius: const BorderRadius.all(
+                                        Radius.circular(20),
+                                      ),
+                                    ),
+                                    child: Column(
+                                      children: Data.map((index) {
+                                        return Expanded(
+                                          child: SizedBox(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text(
+                                                  '${(index['resi'])}',
+                                                  textAlign: TextAlign.center,
+                                                  style: const TextStyle(
+                                                    height: 2,
+                                                    fontFamily: 'Poppins',
+                                                    color: Colors.grey,
+                                                    fontSize: 14,
+                                                  ),
+                                                ),
+                                                Expanded(
+                                                  child: Container(
+                                                    margin:
+                                                        const EdgeInsets.symmetric(
+                                                            vertical: 10),
+                                                    width: double.infinity,
+                                                    child: Row(
+                                                      children: [
+                                                        Column(
+                                                          children: [
+                                                            Image.asset(
+                                                              "assets/icon/pengiriman_icon.png",
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        Expanded(
+                                                          child: Container(
+                                                            margin:
+                                                                const EdgeInsets.only(
+                                                                    left: 10),
+                                                            child: Column(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceBetween,
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                Text(
+                                                                  '${(index['nama_perusahaan'])}',
+                                                                  style:
+                                                                      const TextStyle(
+                                                                    fontFamily:
+                                                                        'Poppins-bold',
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontSize:
+                                                                        12,
+                                                                  ),
+                                                                ),
+                                                                Text(
+                                                                  '${(index['alamat_perusahaan'])}',
+                                                                  style:
+                                                                      const TextStyle(
+                                                                    fontFamily:
+                                                                        'Poppins',
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontSize: 9,
+                                                                  ),
+                                                                ),
+                                                                Column(
+                                                                  children: [
+                                                                    Row(
+                                                                      children: [
+                                                                        const Text(
+                                                                          'Jumlah pemesanan ',
+                                                                          style:
+                                                                              TextStyle(
+                                                                            fontFamily:
+                                                                                'Poppins',
+                                                                            color:
+                                                                                Colors.black,
+                                                                            fontSize:
+                                                                                9,
+                                                                          ),
+                                                                        ),
+                                                                        Text(
+                                                                          '${(index['jumlah_pesanan'].toString())} bar',
+                                                                          style:
+                                                                              const TextStyle(
+                                                                            fontFamily:
+                                                                                'Poppins-bold',
+                                                                            color:
+                                                                                Colors.black,
+                                                                            fontSize:
+                                                                                9,
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                    Row(
+                                                                      children: [
+                                                                        const Text(
+                                                                          'Tanggal pemesanan ',
+                                                                          style:
+                                                                              TextStyle(
+                                                                            fontFamily:
+                                                                                'Poppins',
+                                                                            color:
+                                                                                Colors.black,
+                                                                            fontSize:
+                                                                                9,
+                                                                          ),
+                                                                        ),
+                                                                        Text(
+                                                                          '${(index['tanggal_pemesanaan'])}',
+                                                                          style:
+                                                                              const TextStyle(
+                                                                            fontFamily:
+                                                                                'Poppins-bold',
+                                                                            color:
+                                                                                Colors.black,
+                                                                            fontSize:
+                                                                                9,
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                                Container(
+                                                  margin:
+                                                      const EdgeInsets.only(top: 10),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceAround,
+                                                    children: [
+                                                      Expanded(
+                                                        flex: 1,
+                                                        child: InkWell(
+                                                          onTap: () {
+                                                            print("isi gas");
+                                                          },
+                                                          child: Container(
+                                                            height: 40,
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              color: const Color
+                                                                  .fromRGBO(
+                                                                      249,
+                                                                      1,
+                                                                      131,
+                                                                      1.0),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10),
+                                                            ),
+                                                            child: Center(
+                                                              child: Row(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .center,
+                                                                children: [
+                                                                  Image.asset(
+                                                                    "assets/icon/isiGas_icon.png",
+                                                                  ),
+                                                                  Container(
+                                                                    padding: const EdgeInsets.symmetric(
+                                                                        horizontal:
+                                                                            10),
+                                                                    child: const Text(
+                                                                      "Isi Gas",
+                                                                      style:
+                                                                          TextStyle(
+                                                                        height:
+                                                                            2,
+                                                                        fontFamily:
+                                                                            'Poppins',
+                                                                        color: Colors
+                                                                            .white,
+                                                                        fontSize:
+                                                                            10,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      const SizedBox(
+                                                        width: 10,
+                                                      ),
+                                                      Expanded(
+                                                        flex: 2,
+                                                        child: InkWell(
+                                                          onTap: () {
+                                                            print(
+                                                                "pesanan diterima");
+                                                          },
+                                                          child: Container(
+                                                            height: 40,
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              color: const Color
+                                                                  .fromRGBO(
+                                                                      249,
+                                                                      1,
+                                                                      131,
+                                                                      1.0),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10),
+                                                            ),
+                                                            child: Center(
+                                                              child: Row(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .center,
+                                                                children: [
+                                                                  Image.asset(
+                                                                    "assets/icon/pesananSelesai_icon.png",
+                                                                  ),
+                                                                  Container(
+                                                                    padding: const EdgeInsets.symmetric(
+                                                                        horizontal:
+                                                                            10),
+                                                                    child: const Text(
+                                                                      "Pesanan Diterima",
+                                                                      style:
+                                                                          TextStyle(
+                                                                        height:
+                                                                            2,
+                                                                        fontFamily:
+                                                                            'Poppins',
+                                                                        color: Colors
+                                                                            .white,
+                                                                        fontSize:
+                                                                            10,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      }).toList(),
+                                    ),
                                   ),
-                                ),
+                                )
+                                // Image.asset(
+                                //   "assets/icon/noPengiriman_icon.png",
+                                // ),
+                                // const Text(
+                                //   'Tidak ada pesanan yang harus dikirim',
+                                //   textAlign: TextAlign.center,
+                                //   style: TextStyle(
+                                //     height: 2,
+                                //     fontFamily: 'Poppins',
+                                //     color: Colors.grey,
+                                //     fontSize: 14,
+                                //   ),
+                                // ),
                               ],
                             ),
                           ),
