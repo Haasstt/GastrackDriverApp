@@ -92,7 +92,7 @@ class _MyHomePageState extends State<Homepage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
-                  flex: 2,
+                  flex: 3,
                   child: Container(
                     decoration: BoxDecoration(
                       gradient: const LinearGradient(
@@ -230,7 +230,7 @@ class _MyHomePageState extends State<Homepage> {
                   ),
                 ),
                 Expanded(
-                  flex: 1,
+                  flex: 2,
                   child: Container(
                     margin: const EdgeInsets.only(top: 25),
                     width: MediaQuery.of(context).size.width,
@@ -319,9 +319,9 @@ class _MyHomePageState extends State<Homepage> {
                                                 ),
                                                 Expanded(
                                                   child: Container(
-                                                    margin:
-                                                        const EdgeInsets.symmetric(
-                                                            vertical: 10),
+                                                    margin: const EdgeInsets
+                                                        .symmetric(
+                                                        vertical: 10),
                                                     width: double.infinity,
                                                     child: Row(
                                                       children: [
@@ -335,7 +335,8 @@ class _MyHomePageState extends State<Homepage> {
                                                         Expanded(
                                                           child: Container(
                                                             margin:
-                                                                const EdgeInsets.only(
+                                                                const EdgeInsets
+                                                                    .only(
                                                                     left: 10),
                                                             child: Column(
                                                               mainAxisAlignment:
@@ -437,8 +438,8 @@ class _MyHomePageState extends State<Homepage> {
                                                   ),
                                                 ),
                                                 Container(
-                                                  margin:
-                                                      const EdgeInsets.only(top: 10),
+                                                  margin: const EdgeInsets.only(
+                                                      top: 10),
                                                   child: Row(
                                                     mainAxisAlignment:
                                                         MainAxisAlignment
@@ -455,11 +456,8 @@ class _MyHomePageState extends State<Homepage> {
                                                             decoration:
                                                                 BoxDecoration(
                                                               color: const Color
-                                                                  .fromRGBO(
-                                                                      249,
-                                                                      1,
-                                                                      131,
-                                                                      1.0),
+                                                                  .fromRGBO(249,
+                                                                  1, 131, 1.0),
                                                               borderRadius:
                                                                   BorderRadius
                                                                       .circular(
@@ -475,10 +473,12 @@ class _MyHomePageState extends State<Homepage> {
                                                                     "assets/icon/isiGas_icon.png",
                                                                   ),
                                                                   Container(
-                                                                    padding: const EdgeInsets.symmetric(
+                                                                    padding: const EdgeInsets
+                                                                        .symmetric(
                                                                         horizontal:
                                                                             10),
-                                                                    child: const Text(
+                                                                    child:
+                                                                        const Text(
                                                                       "Isi Gas",
                                                                       style:
                                                                           TextStyle(
@@ -514,11 +514,8 @@ class _MyHomePageState extends State<Homepage> {
                                                             decoration:
                                                                 BoxDecoration(
                                                               color: const Color
-                                                                  .fromRGBO(
-                                                                      249,
-                                                                      1,
-                                                                      131,
-                                                                      1.0),
+                                                                  .fromRGBO(249,
+                                                                  1, 131, 1.0),
                                                               borderRadius:
                                                                   BorderRadius
                                                                       .circular(
@@ -534,10 +531,12 @@ class _MyHomePageState extends State<Homepage> {
                                                                     "assets/icon/pesananSelesai_icon.png",
                                                                   ),
                                                                   Container(
-                                                                    padding: const EdgeInsets.symmetric(
+                                                                    padding: const EdgeInsets
+                                                                        .symmetric(
                                                                         horizontal:
                                                                             10),
-                                                                    child: const Text(
+                                                                    child:
+                                                                        const Text(
                                                                       "Pesanan Diterima",
                                                                       style:
                                                                           TextStyle(
