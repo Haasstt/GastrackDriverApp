@@ -92,7 +92,7 @@ class _MyHomePageState extends State<Homepage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
-                  flex: 2,
+                  flex: 3,
                   child: Container(
                     decoration: BoxDecoration(
                       gradient: const LinearGradient(
@@ -230,7 +230,7 @@ class _MyHomePageState extends State<Homepage> {
                   ),
                 ),
                 Expanded(
-                  flex: 1,
+                  flex: 2,
                   child: Container(
                     margin: const EdgeInsets.only(top: 25),
                     width: MediaQuery.of(context).size.width,
@@ -339,109 +339,102 @@ class _MyHomePageState extends State<Homepage> {
                                                                     .only(
                                                                     left: 10),
                                                             child: Column(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceBetween,
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
                                                               children: [
-                                                                Expanded(
-                                                                  child: SizedBox(
-                                                                    child: SingleChildScrollView(
-                                                                      physics: const BouncingScrollPhysics(),
-                                                                      child: Column(
-                                                                        mainAxisAlignment:
-                                                                            MainAxisAlignment
-                                                                                .spaceBetween,
-                                                                        crossAxisAlignment:
-                                                                            CrossAxisAlignment
-                                                                                .start,
-                                                                        children: [
-                                                                          Text(
-                                                                            '${(index['nama_perusahaan'])}',
-                                                                            style:
-                                                                                const TextStyle(
-                                                                              fontFamily:
-                                                                                  'Poppins-bold',
-                                                                              color: Colors
-                                                                                  .black,
-                                                                              fontSize:
-                                                                                  12,
-                                                                            ),
-                                                                          ),
-                                                                          Container(
-                                                                            padding: EdgeInsets.symmetric(vertical: 5),
-                                                                            child: Text(
-                                                                              '${(index['alamat_perusahaan'])}',
-                                                                              style:
-                                                                                  const TextStyle(
-                                                                                fontFamily:
-                                                                                    'Poppins',
-                                                                                color: Colors
-                                                                                    .black,
-                                                                                fontSize: 9,
-                                                                              ),
-                                                                            ),
-                                                                          ),
-                                                                          Column(
-                                                                            children: [
-                                                                              Row(
-                                                                                children: [
-                                                                                  const Text(
-                                                                                    'Jumlah pemesanan ',
-                                                                                    style:
-                                                                                        TextStyle(
-                                                                                      fontFamily:
-                                                                                          'Poppins',
-                                                                                      color:
-                                                                                          Colors.black,
-                                                                                      fontSize:
-                                                                                          9,
-                                                                                    ),
-                                                                                  ),
-                                                                                  Text(
-                                                                                    '${(index['jumlah_pesanan'].toString())} bar',
-                                                                                    style:
-                                                                                        const TextStyle(
-                                                                                      fontFamily:
-                                                                                          'Poppins-bold',
-                                                                                      color:
-                                                                                          Colors.black,
-                                                                                      fontSize:
-                                                                                          9,
-                                                                                    ),
-                                                                                  ),
-                                                                                ],
-                                                                              ),
-                                                                              Row(
-                                                                                children: [
-                                                                                  const Text(
-                                                                                    'Tanggal pemesanan ',
-                                                                                    style:
-                                                                                        TextStyle(
-                                                                                      fontFamily:
-                                                                                          'Poppins',
-                                                                                      color:
-                                                                                          Colors.black,
-                                                                                      fontSize:
-                                                                                          9,
-                                                                                    ),
-                                                                                  ),
-                                                                                  Text(
-                                                                                    '${(index['tanggal_pemesanaan'])}',
-                                                                                    style:
-                                                                                        const TextStyle(
-                                                                                      fontFamily:
-                                                                                          'Poppins-bold',
-                                                                                      color:
-                                                                                          Colors.black,
-                                                                                      fontSize:
-                                                                                          9,
-                                                                                    ),
-                                                                                  ),
-                                                                                ],
-                                                                              ),
-                                                                            ],
-                                                                          ),
-                                                                        ],
-                                                                      ),
+                                                                Text(
+                                                                  '${(index['nama_perusahaan'])}',
+                                                                  style:
+                                                                      const TextStyle(
+                                                                    fontFamily:
+                                                                        'Poppins-bold',
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontSize:
+                                                                        14,
+                                                                  ),
+                                                                ),
+                                                                Container(
+                                                                  padding: EdgeInsets
+                                                                      .symmetric(
+                                                                          vertical:
+                                                                              5),
+                                                                  child: Text(
+                                                                    '${(index['alamat_perusahaan'])}',
+                                                                    style:
+                                                                        const TextStyle(
+                                                                      fontFamily:
+                                                                          'Poppins',
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontSize:
+                                                                          10,
                                                                     ),
                                                                   ),
+                                                                ),
+                                                                Column(
+                                                                  children: [
+                                                                    Row(
+                                                                      children: [
+                                                                        const Text(
+                                                                          'Jumlah pemesanan ',
+                                                                          style:
+                                                                              TextStyle(
+                                                                            fontFamily:
+                                                                                'Poppins',
+                                                                            color:
+                                                                                Colors.black,
+                                                                            fontSize:
+                                                                                10,
+                                                                          ),
+                                                                        ),
+                                                                        Text(
+                                                                          '${(index['jumlah_pesanan'].toString())} bar',
+                                                                          style:
+                                                                              const TextStyle(
+                                                                            fontFamily:
+                                                                                'Poppins-bold',
+                                                                            color:
+                                                                                Colors.black,
+                                                                            fontSize:
+                                                                                10,
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                    Row(
+                                                                      children: [
+                                                                        const Text(
+                                                                          'Tanggal pemesanan ',
+                                                                          style:
+                                                                              TextStyle(
+                                                                            fontFamily:
+                                                                                'Poppins',
+                                                                            color:
+                                                                                Colors.black,
+                                                                            fontSize:
+                                                                                10,
+                                                                          ),
+                                                                        ),
+                                                                        Text(
+                                                                          '${(index['tanggal_pemesanaan'])}',
+                                                                          style:
+                                                                              const TextStyle(
+                                                                            fontFamily:
+                                                                                'Poppins-bold',
+                                                                            color:
+                                                                                Colors.black,
+                                                                            fontSize:
+                                                                                10,
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                  ],
                                                                 ),
                                                               ],
                                                             ),
