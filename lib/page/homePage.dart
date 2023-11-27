@@ -90,7 +90,7 @@ class _MyHomePageState extends State<Homepage> {
       ),
     );
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 231, 231, 231),
+      backgroundColor: const Color.fromRGBO(128, 38, 198, 1.0),
       resizeToAvoidBottomInset: false,
       body: LiquidPullToRefresh(
         onRefresh: _refreshData,
