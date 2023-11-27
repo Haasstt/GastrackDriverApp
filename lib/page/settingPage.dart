@@ -411,7 +411,7 @@ class _MyHomePageState extends State<Profilsaya> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      'Setting',
+                                      'Pusat Bantuan',
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 20,
@@ -419,58 +419,6 @@ class _MyHomePageState extends State<Profilsaya> {
                                           color: Colors.black),
                                     ),
                                   ],
-                                ),
-                              ),
-                            ),
-                            FadeAnimation(
-                              0.8,
-                              Container(
-                                width: double.infinity,
-                                height: 40,
-                                decoration: const BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10))),
-                                child: TextButton(
-                                  style: TextButton.styleFrom(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                  ),
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      PageTransition(
-                                        child: const NotFoundPage(),
-                                        type: PageTransitionType.rightToLeft,
-                                      ),
-                                    );
-                                  },
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      const Row(
-                                        children: [
-                                          Icon(Icons.help_outline_outlined,
-                                              size: 20, color: Colors.black),
-                                          SizedBox(
-                                            width: 10,
-                                          ),
-                                          Text(
-                                            'Pusat Bantuan',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.normal,
-                                                fontSize: 16,
-                                                fontFamily: 'Poppins',
-                                                color: Colors.black),
-                                          ),
-                                        ],
-                                      ),
-                                      Image.asset(
-                                        "assets/icon/navigate_icon.png",
-                                      ),
-                                    ],
-                                  ),
                                 ),
                               ),
                             ),
