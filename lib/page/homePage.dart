@@ -30,7 +30,7 @@ class _MyHomePageState extends State<Homepage> {
       Data.addAll([
         {
           'resi': "SHIP(GTK)-20231104131902nU",
-          'koordinat': "7.565834930638063, 111.53254397213459",
+          'koordinat': "-7.565834930638063, 111.53254397213459",
           'nama_perusahaan': "PT Saya Pesan Gas Bang",
           'alamat_perusahaan':
               "Jalan Waru Gunung, RT.005/RW.002, Krajan Kulon, Warugunung, Kec. Karangpilang, Kabupaten Sidoarjo, Jawa Timur",
