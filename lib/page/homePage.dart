@@ -85,7 +85,7 @@ class _MyHomePageState extends State<Homepage> {
       double latitude = double.parse(latLongList[0]);
       double longitude = double.parse(latLongList[1]);
 
-      final url = "https://maps.google.com/maps/search/?api=1&query=$latitude,$longitude";
+      final url = "https://maps.google.com/maps?q=$latitude,$longitude";
 
       try {
         await launch(url);
