@@ -77,7 +77,8 @@ class _MyHomePageState extends State<Homepage> {
     await Future.delayed(const Duration(seconds: 2));
     GetData();
   }
-   Future<void> openMap(String latLongString) async {
+
+  Future<void> openMap(String latLongString) async {
     // Split the latLongString into latitude and longitude
     List<String> latLongList = latLongString.split(',');
 
@@ -447,12 +448,14 @@ class _MyHomePageState extends State<Homepage> {
                                               ),
                                             ),
                                             InkWell(
-                                              onTap: (){
-                                                openMap('${(index['koordinat'])}');
+                                              onTap: () {
+                                                openMap(
+                                                    '${(index['koordinat'])}');
                                               },
                                               child: Container(
-                                                margin: const EdgeInsets.symmetric(
-                                                    horizontal: 10),
+                                                margin:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 10),
                                                 decoration: BoxDecoration(
                                                   color: const Color.fromRGBO(
                                                       249, 1, 131, 1.0),
@@ -460,24 +463,30 @@ class _MyHomePageState extends State<Homepage> {
                                                       BorderRadius.circular(50),
                                                 ),
                                                 child: Container(
-                                                  margin: const EdgeInsets.all(5),
-                                                width: 50,
-                                                height: 50,
+                                                  margin:
+                                                      const EdgeInsets.all(5),
+                                                  width: 50,
+                                                  height: 50,
                                                   child: Column(
                                                     mainAxisAlignment:
-                                                        MainAxisAlignment.center,
+                                                        MainAxisAlignment
+                                                            .center,
                                                     children: [
                                                       const FaIcon(
-                                                        FontAwesomeIcons.mapLocation,
+                                                        FontAwesomeIcons
+                                                            .mapLocation,
                                                         color: Colors.white,
                                                         size: 15,
                                                       ),
                                                       Container(
-                                                        padding: const EdgeInsets.only(top: 3),
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(top: 3),
                                                         child: const Text(
                                                           'Map',
                                                           style: TextStyle(
-                                                            fontFamily: 'Poppins',
+                                                            fontFamily:
+                                                                'Poppins',
                                                             color: Colors.white,
                                                             fontSize: 10,
                                                           ),
