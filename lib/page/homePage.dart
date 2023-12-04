@@ -1,4 +1,4 @@
-// ignore_for_file: depend_on_referenced_packages, non_constant_identifier_names, avoid_print, file_names, deprecated_member_use
+// ignore_for_file: depend_on_referenced_packages, non_constant_identifier_names, avoid_print, file_names, deprecated_member_use, prefer_typing_uninitialized_variables
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -6,13 +6,13 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gastrack_driver/page/isigasPage.dart';
 import 'package:gastrack_driver/page/pesanditerimaPage.dart';
 import 'package:gastrack_driver/page/settingPage.dart';
+import 'package:gastrack_driver/provider/PengirimanProvider.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:url_launcher/url_launcher.dart';
-// import 'package:shimmer/shimmer.dart';
-// import 'package:sp_util/sp_util.dart';
-// import 'package:flutter_easyloading/flutter_easyloading.dart';
-// import 'package:another_flushbar/flushbar.dart';
+import 'package:sp_util/sp_util.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:another_flushbar/flushbar.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -22,55 +22,70 @@ class Homepage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<Homepage> {
-  final List<Map> Data = [];
+  List<Map<String, dynamic>> Data = [];
+  bool gagalmemuat = false;
+  bool loading = false;
+  var message;
 
   void GetData() {
     setState(() {
       Data.clear();
-      Data.addAll([
-        {
-          'resi': "SHIP(GTK)-20231104131902nU",
-          'koordinat': "-7.565834930638063, 111.53254397213459",
-          'nama_perusahaan': "PT Saya Pesan Gas Bang",
-          'alamat_perusahaan':
-              "Jalan Waru Gunung, RT.005/RW.002, Krajan Kulon, Warugunung, Kec. Karangpilang, Kabupaten Sidoarjo, Jawa Timur",
-          'jumlah_pesanan': 3,
-          'tanggal_pemesanaan': "2023-11-04"
-        }
-      ]);
+      gagalmemuat = false;
+      loading = true;
     });
-    //   setState(() {
-    //     gagalmemuat = false;
-    //   });
-    //   UserProvider().getDatauser(SpUtil.getInt('id')).then((value) {
-    //     if (value.statusCode == 200) {
-    //       var data = value.body['datauser'];
-    //       setState(() {
-    //         Datauser.add(data);
-    //       });
-    //       EasyLoading.dismiss();
-    //     } else if (value.hasError == true) {
-    //       var pesan = "Gagal Memuat, hubungkan perangkat ke jaringan";
-    //       setState(() {
-    //         message = pesan;
-    //         gagalmemuat = !gagalmemuat;
-    //       });
-    //       Flushbar(
-    //         backgroundColor: Colors.red,
-    //         flushbarPosition: FlushbarPosition.TOP,
-    //         margin: const EdgeInsets.all(10),
-    //         borderRadius: BorderRadius.circular(8),
-    //         message: message,
-    //         icon: const Icon(
-    //           Icons.info_outline,
-    //           size: 28.0,
-    //           color: Colors.white,
-    //         ),
-    //         duration: const Duration(seconds: 3),
-    //       ).show(context);
-    //       EasyLoading.dismiss();
-    //     }
-    //   });
+    PengirimanProvider()
+        .getDatapengiriman(SpUtil.getInt('id'))
+        .then((value) {
+      if (value.statusCode == 200) {
+        var data = value.body['data'];
+        setState(() {
+          Data.addAll([data]);
+          loading = false;
+        });
+        EasyLoading.dismiss();
+      } else if (value.statusCode == 422) {
+        var pesan = value.body['message'];
+        setState(() {
+          message = pesan;
+          loading = false;
+        });
+        Flushbar(
+          backgroundColor: Colors.red,
+          flushbarPosition: FlushbarPosition.TOP,
+          margin: const EdgeInsets.all(10),
+          borderRadius: BorderRadius.circular(8),
+          message: message,
+          icon: const Icon(
+            Icons.info_outline,
+            size: 28.0,
+            color: Colors.white,
+          ),
+          duration: const Duration(seconds: 3),
+        ).show(context);
+        EasyLoading.dismiss();
+      } else if (value.hasError == true) {
+        var pesan = "Gagal Memuat, hubungkan perangkat ke jaringan";
+        setState(() {
+          message = pesan;
+          gagalmemuat = !gagalmemuat;
+          loading = false;
+        });
+        Flushbar(
+          backgroundColor: Colors.red,
+          flushbarPosition: FlushbarPosition.TOP,
+          margin: const EdgeInsets.all(10),
+          borderRadius: BorderRadius.circular(8),
+          message: message,
+          icon: const Icon(
+            Icons.info_outline,
+            size: 28.0,
+            color: Colors.white,
+          ),
+          duration: const Duration(seconds: 3),
+        ).show(context);
+        EasyLoading.dismiss();
+      }
+    });
   }
 
   Future<void> _refreshData() async {
@@ -130,7 +145,7 @@ class _MyHomePageState extends State<Homepage> {
             physics: const AlwaysScrollableScrollPhysics(),
             children: [
               Container(
-                color: const Color.fromARGB(255, 231, 231, 231),
+                color: const Color.fromARGB(255, 255, 255, 255),
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
                 child: Column(
@@ -239,10 +254,10 @@ class _MyHomePageState extends State<Homepage> {
                                     ),
                                   ],
                                 ),
-                                child: const Text(
-                                  'Nurafiif Almas',
+                                child: Text(
+                                  '${(SpUtil.getString('nama_user'))}',
                                   textAlign: TextAlign.center,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontFamily: 'Poppins-bold',
                                     color: Colors.black,
                                     fontSize: 14,
@@ -298,7 +313,7 @@ class _MyHomePageState extends State<Homepage> {
                               color: Colors.grey
                                   .withOpacity(0.25), // Warna bayangan
                               spreadRadius:
-                                  0, // Seberapa jauh bayangan menyebar
+                                  4, // Seberapa jauh bayangan menyebar
                               blurRadius: 4, // Seberapa kabur bayangan
                               offset:
                                   const Offset(1, 1), // Posisi bayangan (x, y)
@@ -329,25 +344,53 @@ class _MyHomePageState extends State<Homepage> {
                                   color: Colors.white,
                                 ),
                                 child: Data.isEmpty
-                                    ? Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Image.asset(
-                                            "assets/icon/noPengiriman_icon.png",
-                                          ),
-                                          const Text(
-                                            'Tidak ada pesanan yang harus dikirim',
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              height: 2,
-                                              fontFamily: 'Poppins',
-                                              color: Colors.grey,
-                                              fontSize: 14,
-                                            ),
-                                          ),
-                                        ],
-                                      )
+                                    ? loading
+                                        ? const Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              CircularProgressIndicator(
+                                                strokeWidth: 2,
+                                                color: Color.fromRGBO(
+                                                    249, 1, 131, 1.0),
+                                              )
+                                            ],
+                                          )
+                                        : gagalmemuat ? Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                message,
+                                                textAlign: TextAlign.center,
+                                                style: const TextStyle(
+                                                  height: 2,
+                                                  fontFamily: 'Poppins',
+                                                  color: Colors.grey,
+                                                  fontSize: 14,
+                                                ),
+                                              ),
+                                              butonReload()
+                                            ],
+                                          ) : Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Image.asset(
+                                                "assets/icon/noPengiriman_icon.png",
+                                              ),
+                                              const Text(
+                                                'Tidak ada pesanan yang harus dikirim',
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  height: 2,
+                                                  fontFamily: 'Poppins',
+                                                  color: Colors.grey,
+                                                  fontSize: 14,
+                                                ),
+                                              ),
+                                            ],
+                                          )
                                     : Data_ada_page(context),
                               ),
                             ),
@@ -359,6 +402,39 @@ class _MyHomePageState extends State<Homepage> {
                 ),
               ),
             ]),
+      ),
+    );
+  }
+
+  InkWell butonReload() {
+    return InkWell(
+      onTap: () {
+        GetData();
+      },
+      child: Container(
+        decoration: BoxDecoration(
+            color: Colors.grey.shade400,
+            borderRadius: const BorderRadius.all(Radius.circular(10))),
+        width: 150,
+        margin: const EdgeInsets.symmetric(vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.refresh_rounded,
+              color: Colors.grey.shade100,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 5),
+              child: Text(
+                'Muat ulang',
+                style: TextStyle(
+                    fontFamily: 'Poppins', color: Colors.grey.shade100),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

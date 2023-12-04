@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:sp_util/sp_util.dart';
 
 class BaseProvider extends GetConnect {
-  var host = "192.168.1.6:8000";
+  var host = "192.168.1.11:8000";
   var Url = "";
   var Urlupdatedatauser = "";
   var header = {
@@ -12,7 +12,7 @@ class BaseProvider extends GetConnect {
   };
 
   BaseProvider() {
-    Url = "http://$host/api/kurir";
-    Urlupdatedatauser = "http://$host/api/kurir/update";
+    Url = "http://$host/api/sopir";
+    Urlupdatedatauser = "http://$host/api/sopir/update";
   }
 }

@@ -7,6 +7,9 @@ class UserProvider extends BaseProvider {
   Future<Response> getDatauser(id) async {
     return get('$Url/$id', headers: header);
   }
+  Future<Response> getDataUpdateuser(id) async {
+    return get('$Url/update/$id', headers: header);
+  }
 
   Future<Response> updateAlamatuser(id, data) async {
     return put('$Urlupdatedatauser/alamat/$id', data, headers: header);

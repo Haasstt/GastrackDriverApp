@@ -1,13 +1,15 @@
 // ignore_for_file: depend_on_referenced_packages, file_names, non_constant_identifier_names
 
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gastrack_driver/animation/BounceAnimation.dart';
 import 'package:gastrack_driver/controller/Authcontroller.dart';
-// import 'package:gastrack/provider/UserProvider.dart';
+import 'package:gastrack_driver/page/kontakkamiPage.dart';
+import 'package:gastrack_driver/provider/UserProvider.dart';
 import 'package:page_transition/page_transition.dart';
-// import 'package:sp_util/sp_util.dart';
-// import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:sp_util/sp_util.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import '../animation/animations.dart';
 import 'notfoundPage.dart';
@@ -22,10 +24,49 @@ class Profilsaya extends StatefulWidget {
 
 class _MyHomePageState extends State<Profilsaya> {
   final LogoutController _controller = LogoutController();
-  List<Map<String, dynamic>> Datauser = [];
+  List<Map<String, dynamic>> Data = [];
+  bool gagalmemuat = false;
+  var message;
 
+  void GetData() {
+    setState(() {
+      gagalmemuat = false;
+    });
+    UserProvider().getDataUpdateuser(SpUtil.getInt('id')).then((value) {
+      if (value.statusCode == 200) {
+        var data = value.body['datauser'];
+        setState(() {
+          Data.clear();
+          Data.addAll([data]);
+        });
+        // print(data);
+        EasyLoading.dismiss();
+      } else if (value.hasError == true) {
+        var pesan = "Gagal Memuat, hubungkan perangkat ke jaringan";
+        setState(() {
+          message = pesan;
+          gagalmemuat = !gagalmemuat;
+        });
+        Flushbar(
+          backgroundColor: Colors.red,
+          flushbarPosition: FlushbarPosition.TOP,
+          margin: const EdgeInsets.all(10),
+          borderRadius: BorderRadius.circular(8),
+          message: message,
+          icon: const Icon(
+            Icons.info_outline,
+            size: 28.0,
+            color: Colors.white,
+          ),
+          duration: const Duration(seconds: 3),
+        ).show(context);
+        EasyLoading.dismiss();
+      }
+    });
+  }
   @override
   void initState() {
+    GetData();
     super.initState();
   }
 
@@ -155,14 +196,14 @@ class _MyHomePageState extends State<Profilsaya> {
                                       ),
                                       Row(
                                         children: [
-                                          Datauser.isEmpty
+                                          Data.isEmpty
                                               ? const Text("")
                                               : Padding(
                                                   padding: const EdgeInsets
                                                       .symmetric(
                                                       horizontal: 10),
                                                   child: Text(
-                                                    Datauser[0]['name'],
+                                                    Data[0]['nama'],
                                                     style: const TextStyle(
                                                         fontWeight:
                                                             FontWeight.normal,
@@ -226,14 +267,14 @@ class _MyHomePageState extends State<Profilsaya> {
                                       ),
                                       Row(
                                         children: [
-                                          Datauser.isEmpty
+                                          Data.isEmpty
                                               ? const Text("")
                                               : Padding(
                                                   padding: const EdgeInsets
                                                       .symmetric(
                                                       horizontal: 10),
                                                   child: Text(
-                                                    Datauser[0]['email'],
+                                                    Data[0]['email'],
                                                     style: const TextStyle(
                                                         fontWeight:
                                                             FontWeight.normal,
@@ -297,9 +338,9 @@ class _MyHomePageState extends State<Profilsaya> {
                                       ),
                                       Row(
                                         children: [
-                                          Datauser.isEmpty
+                                          Data.isEmpty
                                               ? const Text("")
-                                              : Datauser[0]['no_hp'] == null
+                                              : Data[0]['no_hp'] == null
                                                   ? const Padding(
                                                       padding:
                                                           EdgeInsets.symmetric(
@@ -322,7 +363,7 @@ class _MyHomePageState extends State<Profilsaya> {
                                                           .symmetric(
                                                           horizontal: 10),
                                                       child: Text(
-                                                        Datauser[0]['no_hp'],
+                                                        Data[0]['no_hp'],
                                                         style: const TextStyle(
                                                             fontWeight:
                                                                 FontWeight
@@ -492,7 +533,7 @@ class _MyHomePageState extends State<Profilsaya> {
                                     Navigator.push(
                                       context,
                                       PageTransition(
-                                        child: const NotFoundPage(),
+                                        child: const KontakKamiPage(),
                                         type: PageTransitionType.rightToLeft,
                                       ),
                                     );
@@ -510,58 +551,6 @@ class _MyHomePageState extends State<Profilsaya> {
                                           ),
                                           Text(
                                             'Kontak Kami',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.normal,
-                                                fontSize: 16,
-                                                fontFamily: 'Poppins',
-                                                color: Colors.black),
-                                          ),
-                                        ],
-                                      ),
-                                      Image.asset(
-                                        "assets/icon/navigate_icon.png",
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            FadeAnimation(
-                              0.9,
-                              Container(
-                                width: double.infinity,
-                                height: 40,
-                                decoration: const BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10))),
-                                child: TextButton(
-                                  style: TextButton.styleFrom(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                  ),
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      PageTransition(
-                                        child: const NotFoundPage(),
-                                        type: PageTransitionType.rightToLeft,
-                                      ),
-                                    );
-                                  },
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      const Row(
-                                        children: [
-                                          Icon(Icons.flag,
-                                              size: 20, color: Colors.black),
-                                          SizedBox(
-                                            width: 10,
-                                          ),
-                                          Text(
-                                            'Laporkan Masalah',
                                             style: TextStyle(
                                                 fontWeight: FontWeight.normal,
                                                 fontSize: 16,
