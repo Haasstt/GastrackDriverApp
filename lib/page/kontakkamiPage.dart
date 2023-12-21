@@ -29,7 +29,7 @@ class _MyHomePageState extends State<KontakKamiPage> {
   }
 
   Future<void> openInstagram() async {
-    final url = "https://www.instagram.com/direct/t/102046197858140";
+    const url = "https://www.instagram.com/direct/t/102046197858140";
     try {
       await launch(url);
     } catch (e) {

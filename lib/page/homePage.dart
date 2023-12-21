@@ -33,10 +33,9 @@ class _MyHomePageState extends State<Homepage> {
       gagalmemuat = false;
       loading = true;
     });
-    PengirimanProvider()
-        .getDatapengiriman(SpUtil.getInt('id'))
-        .then((value) {
+    PengirimanProvider().getDatapengiriman("1").then((value) {
       if (value.statusCode == 200) {
+        print(value.body);
         var data = value.body['data'];
         setState(() {
           Data.addAll([data]);
@@ -356,41 +355,43 @@ class _MyHomePageState extends State<Homepage> {
                                               )
                                             ],
                                           )
-                                        : gagalmemuat ? Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                message,
-                                                textAlign: TextAlign.center,
-                                                style: const TextStyle(
-                                                  height: 2,
-                                                  fontFamily: 'Poppins',
-                                                  color: Colors.grey,
-                                                  fontSize: 14,
-                                                ),
-                                              ),
-                                              butonReload()
-                                            ],
-                                          ) : Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Image.asset(
-                                                "assets/icon/noPengiriman_icon.png",
-                                              ),
-                                              const Text(
-                                                'Tidak ada pesanan yang harus dikirim',
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                  height: 2,
-                                                  fontFamily: 'Poppins',
-                                                  color: Colors.grey,
-                                                  fontSize: 14,
-                                                ),
-                                              ),
-                                            ],
-                                          )
+                                        : gagalmemuat
+                                            ? Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Text(
+                                                    message,
+                                                    textAlign: TextAlign.center,
+                                                    style: const TextStyle(
+                                                      height: 2,
+                                                      fontFamily: 'Poppins',
+                                                      color: Colors.grey,
+                                                      fontSize: 14,
+                                                    ),
+                                                  ),
+                                                  butonReload()
+                                                ],
+                                              )
+                                            : Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Image.asset(
+                                                    "assets/icon/noPengiriman_icon.png",
+                                                  ),
+                                                  const Text(
+                                                    'Tidak ada pesanan yang harus dikirim',
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                      height: 2,
+                                                      fontFamily: 'Poppins',
+                                                      color: Colors.grey,
+                                                      fontSize: 14,
+                                                    ),
+                                                  ),
+                                                ],
+                                              )
                                     : Data_ada_page(context),
                               ),
                             ),
@@ -639,7 +640,9 @@ class _MyHomePageState extends State<Homepage> {
                                     Navigator.push(
                                       context,
                                       PageTransition(
-                                        child: const IsigasPage(),
+                                        child: IsigasPage(
+                                          id: index['id_pengiriman'],
+                                        ),
                                         type: PageTransitionType.rightToLeft,
                                       ),
                                     );
@@ -688,7 +691,9 @@ class _MyHomePageState extends State<Homepage> {
                                     Navigator.push(
                                       context,
                                       PageTransition(
-                                        child: const PesananDiterimaPage(),
+                                        child: PesananDiterimaPage(
+                                          id: index['id_pengiriman'],
+                                        ),
                                         type: PageTransitionType.rightToLeft,
                                       ),
                                     );

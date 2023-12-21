@@ -6,21 +6,54 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:gastrack_driver/animation/BounceAnimation.dart';
-// import 'package:gastrack/provider/UserProvider.dart';
-// import 'package:sp_util/sp_util.dart';
-// import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:gastrack_driver/controller/PengirimanController.dart';
 
 import '../animation/animations.dart';
 
 class PesananDiterimaPage extends StatefulWidget {
-  const PesananDiterimaPage({super.key});
+  const PesananDiterimaPage({super.key, required this.id});
+
+  final int id;
 
   @override
   State<PesananDiterimaPage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<PesananDiterimaPage> {
-  PlatformFile? photoprofile;
+  late var id = widget.id.toInt();
+  final PengirimanController _controller = PengirimanController();
+
+  Future<void> _showConfirmationDialog(BuildContext context) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible:
+          false, // Dialog tidak bisa ditutup dengan mengetuk di luar dialog
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(
+                20.0), // Atur BorderRadius sesuai kebutuhan
+          ),
+          title: const Text('Konfirmasi'),
+          content: const Text(
+              'Sebelum melanjutkan proses unggah pastikan Anda telah memilih foto yang benar karena Anda tidak bisa mengubah unggahan Anda kembali'),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Batal'),
+              onPressed: () {
+                Navigator.of(context).pop(); // Menutup dialog
+              },
+            ),
+            TextButton(
+                child: const Text('Lanjutkan'),
+                onPressed: () {
+                  _controller.Input_Gas_Keluar(id);
+                }),
+          ],
+        );
+      },
+    );
+  }
 
   void getFilePicker() async {
     final result = await FilePicker.platform.pickFiles(type: FileType.image);
@@ -33,7 +66,7 @@ class _MyHomePageState extends State<PesananDiterimaPage> {
         controller.sink.add(bytes);
 
         setState(() {
-          photoprofile = PlatformFile(
+          _controller.photoprofile = PlatformFile(
             path: selectedFile.path,
             name: selectedFile.uri.pathSegments.last,
             readStream: controller.stream,
@@ -92,18 +125,50 @@ class _MyHomePageState extends State<PesananDiterimaPage> {
                           ),
                           FadeAnimation(
                             0.6,
-                             Container(
+                            Container(
                               margin: const EdgeInsets.symmetric(vertical: 20),
-                               child: const Text(
-                                  '*mohon untuk melampirkan foto penerimaan (terlihat jumlah bar yang diterima)',
-                                  style: TextStyle(
-                                    fontSize: 14,
+                              child: const Text(
+                                '*mohon untuk melampirkan foto penerimaan (terlihat jumlah bar yang diterima)',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontFamily: 'Poppins',
+                                  color: Color.fromRGBO(249, 1, 131, 1.0),
+                                ),
+                              ),
+                            ),
+                          ),
+                          FadeAnimation(
+                            0.6,
+                            Form(
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 20),
+                                child: TextFormField(
+                                  controller: _controller.txtGasKeluar,
+                                  decoration: const InputDecoration(
+                                    suffixIcon: Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 20, vertical: 20),
+                                        child: Text(
+                                          '/ bar',
+                                          style: TextStyle(
+                                            fontFamily: 'Poppins',
+                                          ),
+                                        )),
+                                    border: OutlineInputBorder(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(40)),
+                                    ),
+                                    labelText: "Masukkan jumlah gas diterima",
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                  ),
+                                  style: const TextStyle(
                                     fontFamily: 'Poppins',
-                                    color: Color.fromRGBO(249, 1, 131, 1.0),
                                   ),
                                 ),
-                             ),
-                            
+                              ),
+                            ),
                           ),
                           Container(
                             height: MediaQuery.of(context).size.height * 0.30,
@@ -112,7 +177,7 @@ class _MyHomePageState extends State<PesananDiterimaPage> {
                                     const BorderRadius.all(Radius.circular(30)),
                                 border:
                                     Border.all(width: 1, color: Colors.grey)),
-                            child: photoprofile == null
+                            child: _controller.photoprofile == null
                                 ? InkWell(
                                     onTap: () {
                                       getFilePicker();
@@ -125,23 +190,24 @@ class _MyHomePageState extends State<PesananDiterimaPage> {
                                     ),
                                   )
                                 : Container(
-                                  margin: const EdgeInsets.symmetric(vertical: 20),
-                                  child: Image.file(
-                                      File(photoprofile!.path!),
+                                    margin: const EdgeInsets.symmetric(
+                                        vertical: 20),
+                                    child: Image.file(
+                                      File(_controller.photoprofile!.path!),
                                       width: double.infinity,
                                     ),
-                                ),
+                                  ),
                           ),
-                          photoprofile != null
+                          _controller.photoprofile != null
                               ? Container(
-                                margin: const EdgeInsets.only(top: 20),
-                                child: ElevatedButton(
+                                  margin: const EdgeInsets.only(top: 20),
+                                  child: ElevatedButton(
                                     onPressed: () {
                                       getFilePicker();
                                     },
                                     child: const Text("Pilih Foto Lainnya"),
                                   ),
-                              )
+                                )
                               : const Text(""),
                           BounceAnimation(
                             0.7,
@@ -159,6 +225,7 @@ class _MyHomePageState extends State<PesananDiterimaPage> {
                                 ),
                                 onPressed: () {
                                   FocusManager.instance.primaryFocus?.unfocus();
+                                  _showConfirmationDialog(context);
                                 },
                                 child: const Text(
                                   "Submit",

@@ -54,7 +54,7 @@ class LoginController extends GetxController {
             SpUtil.putString('nama_user', data['nama']);
             SpUtil.putBool('kurir', true);
             Get.offAllNamed('/home');
-          } else if (value.statusCode == 422) {
+          } else if (value.statusCode == 422) { 
             Get.snackbar(
               "Login gagal",
               value.body['message'],

@@ -3,8 +3,11 @@ import 'package:get/get.dart';
 import 'package:sp_util/sp_util.dart';
 
 class BaseProvider extends GetConnect {
-  var host = "192.168.1.11:8000";
+  var host = "192.168.137.1:8000";
   var Url = "";
+  var UrlImageBuktiPembayaran = "";
+  var UrlImageBuktiGasMasuk = "";
+  var UrlImageBuktiGasKeluar = "";
   var Urlupdatedatauser = "";
   var header = {
     'Accept': 'application/json',
@@ -14,5 +17,8 @@ class BaseProvider extends GetConnect {
   BaseProvider() {
     Url = "http://$host/api/sopir";
     Urlupdatedatauser = "http://$host/api/sopir/update";
+    UrlImageBuktiPembayaran = "http://$host/img/BuktiPembayaran";
+    UrlImageBuktiGasMasuk = "http://$host/img/GasMasuk";
+    UrlImageBuktiGasKeluar = "http://$host/img/GasKeluar";
   }
 }
