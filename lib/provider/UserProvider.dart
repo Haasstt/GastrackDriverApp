@@ -4,11 +4,12 @@ import 'Base_provider.dart';
 import 'package:get/get.dart';
 
 class UserProvider extends BaseProvider {
-  Future<Response> getDatauser(id) async {
-    return get('$Url/$id', headers: header);
-  }
   Future<Response> getDataUpdateuser(id) async {
     return get('$Url/update/$id', headers: header);
+
+  }
+  Future<Response> getDatauser(id) async {
+    return get('$Url/detail/$id', headers: header);
   }
 
   Future<Response> updateAlamatuser(id, data) async {

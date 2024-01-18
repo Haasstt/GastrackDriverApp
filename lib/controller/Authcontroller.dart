@@ -1,6 +1,7 @@
 // ignore_for_file: depend_on_referenced_packages, file_names
 
 import 'package:flutter/material.dart';
+import 'package:gastrack_driver/loading.dart';
 import 'package:gastrack_driver/provider/AuthProvider.dart';
 import 'package:get/get.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -11,7 +12,7 @@ class LoginController extends GetxController {
   TextEditingController txtPass = TextEditingController();
   bool obscureText = true;
 
-  void auth() {
+  void auth(context) {
     // String id = "1";
     // String emailPaten = "kurir@gmail.com";
 
@@ -32,53 +33,55 @@ class LoginController extends GetxController {
       //   SpUtil.putBool('kurir', true);
       //   Get.offAllNamed('/home');
       // }
-        EasyLoading.show();
-        var data = {
-          "email": email,
-          "password": pass,
-        };
-        LoginProvider().auth(data).then((value) {
-          print(value.body);
-          if (value.statusCode == 200) {
-            var data = value.body['datauser'];
-            var token = value.body['token'];
-            Get.snackbar(
-              "Successs",
-              "Login Berhasil",
-              backgroundColor: Colors.green,
-              colorText: Colors.white,
-            );
+      customLoading(context);
+      var data = {
+        "email": email,
+        "password": pass,
+      };
+      LoginProvider().auth(data).then((value) {
+        Navigator.pop(context);
+        if (value.statusCode == 200) {
+          var data = value.body['datauser'];
+          var token = value.body['token'];
+          Get.snackbar(
+            "Successs",
+            "Login Berhasil",
+            backgroundColor: Colors.green,
+            colorText: Colors.white,
+          );
 
-            SpUtil.putInt('id', data['id_sopir']);
-            SpUtil.putString('token', token);
-            SpUtil.putString('nama_user', data['nama']);
-            SpUtil.putBool('kurir', true);
-            Get.offAllNamed('/home');
-          } else if (value.statusCode == 422) { 
-            Get.snackbar(
-              "Login gagal",
-              value.body['message'],
-              backgroundColor: Colors.red,
-              colorText: Colors.white,
-            );
-          } else if (value.hasError == true) {
-            Get.snackbar(
-              "Server Not Responding",
-              'Gagal menghubungka ke server',
-              colorText: Colors.white,
-            );
-          }
-          EasyLoading.dismiss();
-        });
+          SpUtil.putInt('id', data['id_sopir']);
+          SpUtil.putString('token', token);
+          SpUtil.putString('nama_user', data['nama']);
+          SpUtil.putBool('kurir', true);
+          Get.offAllNamed('/home');
+        } else if (value.statusCode == 422) {
+          Navigator.pop(context);
+          Get.snackbar(
+            "Login gagal",
+            value.body['message'],
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
+        } else if (value.hasError == true) {
+          Navigator.pop(context);
+          Get.snackbar(
+            "Server Not Responding",
+            'Gagal menghubungka ke server',
+            colorText: Colors.white,
+          );
+        }
+        EasyLoading.dismiss();
+      });
     }
   }
 }
 
 class LogoutController extends GetxController {
-  void logout() {
+  void logout(context) {
     // SpUtil.clear();
     // Get.offAllNamed('/cover');
-    EasyLoading.show();
+    customLoading(context);
     var data = {
       "token": SpUtil.getString('token')!,
     };
@@ -88,7 +91,6 @@ class LogoutController extends GetxController {
         SpUtil.clear();
         Get.offAllNamed('/cover');
       }
-      EasyLoading.dismiss();
     });
   }
 }

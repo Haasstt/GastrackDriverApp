@@ -189,7 +189,6 @@ class _MyHomePageState extends State<Coverpage> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Container(
-                        height: 370,
                         decoration: const BoxDecoration(
                           color: Color.fromARGB(255, 246, 246, 246),
                           borderRadius: BorderRadius.only(
@@ -334,7 +333,7 @@ class _MyHomePageState extends State<Coverpage> {
                                   onPressed: () {
                                     FocusManager.instance.primaryFocus
                                         ?.unfocus();
-                                    _loginController.auth();
+                                    _loginController.auth(context);
                                   },
                                   child: const Text(
                                     "L O G I N",

@@ -6,12 +6,15 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gastrack_driver/page/isigasPage.dart';
 import 'package:gastrack_driver/page/pesanditerimaPage.dart';
 import 'package:gastrack_driver/page/settingPage.dart';
+import 'package:gastrack_driver/page/tariksaldoPage.dart';
 import 'package:gastrack_driver/provider/PengirimanProvider.dart';
+import 'package:gastrack_driver/provider/UserProvider.dart';
+import 'package:intl/intl.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:sp_util/sp_util.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:another_flushbar/flushbar.dart';
 
 class Homepage extends StatefulWidget {
@@ -23,25 +26,77 @@ class Homepage extends StatefulWidget {
 
 class _MyHomePageState extends State<Homepage> {
   List<Map<String, dynamic>> Data = [];
+  List<Map<String, dynamic>> DataUser = [];
   bool gagalmemuat = false;
   bool loading = false;
   var message;
 
   void GetData() {
+    Data.clear();
+    DataUser.clear();
     setState(() {
-      Data.clear();
       gagalmemuat = false;
       loading = true;
     });
-    PengirimanProvider().getDatapengiriman("1").then((value) {
+
+    UserProvider().getDatauser(SpUtil.getInt('id')).then((value) {
       if (value.statusCode == 200) {
         print(value.body);
-        var data = value.body['data'];
+        var data = value.body['datauser'];
         setState(() {
-          Data.addAll([data]);
-          loading = false;
+          DataUser.addAll([data]);
         });
-        EasyLoading.dismiss();
+
+        PengirimanProvider()
+            .getDatapengiriman(SpUtil.getInt('id'))
+            .then((value) {
+          if (value.statusCode == 200) {
+            var data = value.body['data'];
+            setState(() {
+              Data.addAll([data]);
+              loading = false;
+            });
+          } else if (value.statusCode == 422) {
+            var pesan = value.body['message'];
+            setState(() {
+              message = pesan;
+              loading = false;
+            });
+            Flushbar(
+              backgroundColor: Colors.red,
+              flushbarPosition: FlushbarPosition.TOP,
+              margin: const EdgeInsets.all(10),
+              borderRadius: BorderRadius.circular(8),
+              message: message,
+              icon: const Icon(
+                Icons.info_outline,
+                size: 28.0,
+                color: Colors.white,
+              ),
+              duration: const Duration(seconds: 3),
+            ).show(context);
+          } else if (value.hasError == true) {
+            var pesan = "Gagal Memuat, hubungkan perangkat ke jaringan";
+            setState(() {
+              message = pesan;
+              gagalmemuat = !gagalmemuat;
+              loading = false;
+            });
+            Flushbar(
+              backgroundColor: Colors.red,
+              flushbarPosition: FlushbarPosition.TOP,
+              margin: const EdgeInsets.all(10),
+              borderRadius: BorderRadius.circular(8),
+              message: message,
+              icon: const Icon(
+                Icons.info_outline,
+                size: 28.0,
+                color: Colors.white,
+              ),
+              duration: const Duration(seconds: 3),
+            ).show(context);
+          }
+        });
       } else if (value.statusCode == 422) {
         var pesan = value.body['message'];
         setState(() {
@@ -61,7 +116,6 @@ class _MyHomePageState extends State<Homepage> {
           ),
           duration: const Duration(seconds: 3),
         ).show(context);
-        EasyLoading.dismiss();
       } else if (value.hasError == true) {
         var pesan = "Gagal Memuat, hubungkan perangkat ke jaringan";
         setState(() {
@@ -82,7 +136,6 @@ class _MyHomePageState extends State<Homepage> {
           ),
           duration: const Duration(seconds: 3),
         ).show(context);
-        EasyLoading.dismiss();
       }
     });
   }
@@ -205,9 +258,10 @@ class _MyHomePageState extends State<Homepage> {
                                           'Aplikasi untuk pengemudi',
                                           textAlign: TextAlign.start,
                                           style: TextStyle(
+                                            height: 2,
                                             fontFamily: 'Poppins',
                                             color: Colors.white,
-                                            fontSize: 14,
+                                            fontSize: 12,
                                           ),
                                         ),
                                       ],
@@ -235,8 +289,7 @@ class _MyHomePageState extends State<Homepage> {
                                 width: MediaQuery.of(context).size.width,
                                 margin:
                                     const EdgeInsets.symmetric(horizontal: 20),
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 20),
+                                padding: const EdgeInsets.all(10),
                                 decoration: BoxDecoration(
                                   color: const Color.fromRGBO(255, 255, 255, 1),
                                   borderRadius: const BorderRadius.all(
@@ -253,14 +306,161 @@ class _MyHomePageState extends State<Homepage> {
                                     ),
                                   ],
                                 ),
-                                child: Text(
-                                  '${(SpUtil.getString('nama_user'))}',
-                                  textAlign: TextAlign.center,
-                                  style: const TextStyle(
-                                    fontFamily: 'Poppins-bold',
-                                    color: Colors.black,
-                                    fontSize: 14,
-                                  ),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Image.asset(
+                                          "assets/icon/dompet_icon.png",
+                                        ),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        Data.isEmpty
+                                            ? Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Shimmer.fromColors(
+                                                    direction:
+                                                        ShimmerDirection.ltr,
+                                                    baseColor:
+                                                        Colors.grey.shade300,
+                                                    highlightColor:
+                                                        Colors.grey.shade100,
+                                                    child: Container(
+                                                      width: 100,
+                                                      height: 15,
+                                                      decoration: BoxDecoration(
+                                                        color: Colors
+                                                            .grey.shade300,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 10,
+                                                  ),
+                                                  Shimmer.fromColors(
+                                                    direction:
+                                                        ShimmerDirection.ltr,
+                                                    baseColor:
+                                                        Colors.grey.shade300,
+                                                    highlightColor:
+                                                        Colors.grey.shade100,
+                                                    child: Container(
+                                                      width: 60,
+                                                      height: 15,
+                                                      decoration: BoxDecoration(
+                                                        color: Colors
+                                                            .grey.shade300,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              )
+                                            : Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    DataUser[0]['nama'],
+                                                    style: const TextStyle(
+                                                      fontFamily:
+                                                          'Poppins-bold',
+                                                      color: Colors.black,
+                                                      fontSize: 14,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 2,
+                                                  ),
+                                                  Text(
+                                                    'Rp${(NumberFormat.decimalPattern().format(int.parse(
+                                                      DataUser[0]['bop_sopir'],
+                                                    )))},-',
+                                                    style: const TextStyle(
+                                                      fontFamily:
+                                                          'Poppins-bold',
+                                                      color: Colors.black,
+                                                      fontSize: 14,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                      ],
+                                    ),
+                                    Container(
+                                      padding: const EdgeInsets.only(
+                                        right: 5,
+                                        top: 4,
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          GestureDetector(
+                                            onTap: () {
+                                              Navigator.push(
+                                                context,
+                                                PageTransition(
+                                                  child: TarikSaldoPage(
+                                                    saldo: DataUser[0]['bop_sopir'],
+                                                  ),
+                                                  type: PageTransitionType
+                                                      .rightToLeft,
+                                                ),
+                                              );
+                                            },
+                                            child: Column(
+                                              children: [
+                                                Image.asset(
+                                                  "assets/icon/tariktunai_icon.png",
+                                                ),
+                                                const SizedBox(
+                                                  height: 2,
+                                                ),
+                                                const Text(
+                                                  'Tarik Tunai',
+                                                  style: TextStyle(
+                                                    fontFamily: 'Poppins',
+                                                    color: Colors.black,
+                                                    fontSize: 6,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          Column(
+                                            children: [
+                                              Image.asset(
+                                                "assets/icon/riwayatpenarikan_icon.png",
+                                              ),
+                                              const SizedBox(
+                                                height: 2,
+                                              ),
+                                              const Text(
+                                                'Riwayat',
+                                                style: TextStyle(
+                                                  fontFamily: 'Poppins',
+                                                  color: Colors.black,
+                                                  fontSize: 6,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                               SizedBox(

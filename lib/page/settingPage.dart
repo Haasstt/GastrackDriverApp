@@ -26,9 +26,9 @@ class _MyHomePageState extends State<Profilsaya> {
   final LogoutController _controller = LogoutController();
   List<Map<String, dynamic>> Data = [];
   bool gagalmemuat = false;
-  var message;
 
   void GetData() {
+    Data.clear();
     setState(() {
       gagalmemuat = false;
     });
@@ -44,7 +44,6 @@ class _MyHomePageState extends State<Profilsaya> {
       } else if (value.hasError == true) {
         var pesan = "Gagal Memuat, hubungkan perangkat ke jaringan";
         setState(() {
-          message = pesan;
           gagalmemuat = !gagalmemuat;
         });
         Flushbar(
@@ -52,7 +51,7 @@ class _MyHomePageState extends State<Profilsaya> {
           flushbarPosition: FlushbarPosition.TOP,
           margin: const EdgeInsets.all(10),
           borderRadius: BorderRadius.circular(8),
-          message: message,
+          message: pesan,
           icon: const Icon(
             Icons.info_outline,
             size: 28.0,
@@ -60,7 +59,6 @@ class _MyHomePageState extends State<Profilsaya> {
           ),
           duration: const Duration(seconds: 3),
         ).show(context);
-        EasyLoading.dismiss();
       }
     });
   }
@@ -76,47 +74,119 @@ class _MyHomePageState extends State<Profilsaya> {
       barrierDismissible:
           false, // Dialog tidak bisa ditutup dengan mengetuk di luar dialog
       builder: (BuildContext context) {
-        return AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(
-                20.0), // Atur BorderRadius sesuai kebutuhan
-          ),
-          title: const Text('Konfirmasi'),
-          content: const Text('Apakah Anda yakin ingin melanjutkan?'),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('Batal'),
-              onPressed: () {
-                Navigator.of(context).pop(); // Menutup dialog
-              },
+        return  BounceAnimation(
+          0.1,
+          AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(
+                  20.0), // Atur BorderRadius sesuai kebutuhan
             ),
-            TextButton(
-                child: const Text('Ya'),
-                onPressed: () {
-                  _controller.logout();
-                }),
-          ],
+            title: const Text(
+              'Apakah Anda yakin ingin keluar?',
+              style: TextStyle(
+                  fontSize: 14,
+                  fontFamily: 'Poppins-bold',
+                  color: Colors.black),
+            ),
+            content: const Text(
+              'Akun akan terhapus dan Anda akan keluar dari aplikasi. tetap lanjut?',
+              style: TextStyle(
+                  fontSize: 12, fontFamily: 'Poppins', color: Colors.black),
+            ),
+            actions: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Expanded(
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      style: TextButton.styleFrom(
+                        backgroundColor: const Color.fromRGBO(249, 1, 131, 1.0),
+                        foregroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(vertical: 5),
+                        alignment: Alignment.center,
+                        child: const Text(
+                          'Batal',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 8,
+                  ),
+                  Expanded(
+                    child: TextButton(
+                      onPressed: () {
+                        _controller.logout(context);
+                      },
+                      style: TextButton.styleFrom(
+                        backgroundColor:
+                            const Color.fromARGB(255, 255, 255, 255),
+                        foregroundColor:
+                            const Color.fromRGBO(128, 38, 198, 1.0),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(vertical: 5),
+                        alignment: Alignment.center,
+                        child: const Text(
+                          'Iya',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         );
       },
     );
+  }
+  
+  Future<void> _refreshData() async {
+    await Future.delayed(const Duration(seconds: 2));
+    GetData();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Stack(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(
-                top: 120, left: 10, right: 10, bottom: 10),
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              width: double.infinity,
-              height: MediaQuery.of(context).size.height,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: RefreshIndicator(
+        onRefresh: _refreshData,
+        child: Stack(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(
+                  top: 120, left: 10, right: 10, bottom: 10),
+              child: ListView(
+                padding: EdgeInsets.zero,
                 children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    width: double.infinity,
+                    height: MediaQuery.of(context).size.height - 130,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
                   Expanded(
                     child: FadeAnimation(
                       0.5,
@@ -615,62 +685,66 @@ class _MyHomePageState extends State<Profilsaya> {
                       ),
                     ),
                   )
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
-          ),
-          Container(
-            padding: const EdgeInsets.only(top: 40),
-            width: double.infinity,
-            decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Color.fromRGBO(249, 1, 131, 1.0),
-                    Color.fromRGBO(128, 38, 198, 1.0)
-                  ],
-                ),
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(20),
-                  bottomRight: Radius.circular(20),
-                )),
-            child: Row(
-              children: [
-                Container(
-                  margin:
-                      const EdgeInsets.symmetric(vertical: 15, horizontal: 5),
-                  height: 50,
-                  width: 50,
-                  child: TextButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: const Icon(
-                      Icons.arrow_back,
-                      color: Color.fromRGBO(255, 255, 255, 1),
+            Container(
+              padding: const EdgeInsets.only(top: 40),
+              width: double.infinity,
+              decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Color.fromRGBO(249, 1, 131, 1.0),
+                      Color.fromRGBO(128, 38, 198, 1.0)
+                    ],
+                  ),
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(20),
+                    bottomRight: Radius.circular(20),
+                  )),
+              child: Row(
+                children: [
+                  Container(
+                    margin:
+                        const EdgeInsets.symmetric(vertical: 15, horizontal: 5),
+                    height: 50,
+                    width: 50,
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Icon(
+                        Icons.arrow_back,
+                        color: Color.fromRGBO(255, 255, 255, 1),
+                      ),
                     ),
                   ),
-                ),
-                const Expanded(
-                  child: Text(
-                    "Pengaturan",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontFamily: "Poppins-bold",
-                      fontSize: 20,
-                      color: Colors.white,
+                  const Expanded(
+                    child: Text(
+                      "Pengaturan",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: "Poppins-bold",
+                        fontSize: 20,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(
-                  width: 50,
-                ),
-              ],
+                  const SizedBox(
+                    width: 50,
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 }
+
