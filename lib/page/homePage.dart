@@ -5,12 +5,14 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gastrack_driver/page/isigasPage.dart';
 import 'package:gastrack_driver/page/pesanditerimaPage.dart';
+import 'package:gastrack_driver/page/riwayatpenarikanPage.dart';
 import 'package:gastrack_driver/page/settingPage.dart';
 import 'package:gastrack_driver/page/tariksaldoPage.dart';
 import 'package:gastrack_driver/provider/PengirimanProvider.dart';
 import 'package:gastrack_driver/provider/UserProvider.dart';
 import 'package:intl/intl.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
+import 'package:lottie/lottie.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -318,7 +320,7 @@ class _MyHomePageState extends State<Homepage> {
                                         const SizedBox(
                                           width: 10,
                                         ),
-                                        Data.isEmpty
+                                        DataUser.isEmpty
                                             ? Column(
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
@@ -410,7 +412,8 @@ class _MyHomePageState extends State<Homepage> {
                                                 context,
                                                 PageTransition(
                                                   child: TarikSaldoPage(
-                                                    saldo: DataUser[0]['bop_sopir'],
+                                                    saldo: DataUser[0]
+                                                        ['bop_sopir'],
                                                   ),
                                                   type: PageTransitionType
                                                       .rightToLeft,
@@ -439,23 +442,36 @@ class _MyHomePageState extends State<Homepage> {
                                           const SizedBox(
                                             width: 10,
                                           ),
-                                          Column(
-                                            children: [
-                                              Image.asset(
-                                                "assets/icon/riwayatpenarikan_icon.png",
-                                              ),
-                                              const SizedBox(
-                                                height: 2,
-                                              ),
-                                              const Text(
-                                                'Riwayat',
-                                                style: TextStyle(
-                                                  fontFamily: 'Poppins',
-                                                  color: Colors.black,
-                                                  fontSize: 6,
+                                          GestureDetector(
+                                            onTap: () {
+                                              Navigator.push(
+                                                context,
+                                                PageTransition(
+                                                  child:
+                                                      const RiwayatPenarikan(),
+                                                  type: PageTransitionType
+                                                      .rightToLeft,
                                                 ),
-                                              ),
-                                            ],
+                                              );
+                                            },
+                                            child: Column(
+                                              children: [
+                                                Image.asset(
+                                                  "assets/icon/riwayatpenarikan_icon.png",
+                                                ),
+                                                const SizedBox(
+                                                  height: 2,
+                                                ),
+                                                const Text(
+                                                  'Riwayat',
+                                                  style: TextStyle(
+                                                    fontFamily: 'Poppins',
+                                                    color: Colors.black,
+                                                    fontSize: 6,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -544,15 +560,28 @@ class _MyHomePageState extends State<Homepage> {
                                 ),
                                 child: Data.isEmpty
                                     ? loading
-                                        ? const Column(
+                                        ? Column(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
                                             children: [
-                                              CircularProgressIndicator(
-                                                strokeWidth: 2,
-                                                color: Color.fromRGBO(
-                                                    249, 1, 131, 1.0),
-                                              )
+                                              Center(
+                                                child: Column(
+                                                  children: [
+                                                    Lottie.asset(
+                                                        'assets/js/loadingPage.json',
+                                                        width: 150),
+                                                    const Text(
+                                                      'Memuat',
+                                                      style: TextStyle(
+                                                        fontSize: 12,
+                                                        fontFamily:
+                                                            'Poppins',
+                                                        color: Colors.black,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
                                             ],
                                           )
                                         : gagalmemuat

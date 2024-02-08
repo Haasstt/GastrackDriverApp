@@ -7,6 +7,7 @@ import 'dart:async';
 import 'package:flutter_easyloading/src/easy_loading.dart';
 import 'package:get/get.dart';
 import 'package:sp_util/sp_util.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 //page
 import 'page/coverpage.dart';
@@ -14,6 +15,7 @@ import 'page/coverpage.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SpUtil.getInstance();
+  await initializeDateFormatting('id_ID');
   runApp(GetMaterialApp(
     theme: customTheme,
     builder: EasyLoading.init(),

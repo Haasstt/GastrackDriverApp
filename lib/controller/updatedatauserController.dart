@@ -1,6 +1,9 @@
 // ignore_for_file: non_constant_identifier_names, depend_on_referenced_packages, file_names, avoid_print
 
 import 'package:flutter/material.dart';
+import 'package:gastrack_driver/controller/Authcontroller.dart';
+import 'package:gastrack_driver/loading.dart';
+import 'package:gastrack_driver/provider/UserProvider.dart';
 import 'package:get/get.dart';
 // import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:sp_util/sp_util.dart';
@@ -14,113 +17,105 @@ class UpdateDataUserController extends GetxController {
   TextEditingController txtNewPass = TextEditingController();
   TextEditingController txtConfirmNewPass = TextEditingController();
 
-  void ChangeName() {
+  void ChangeName(context) {
+    customLoading(context);
     String name = txtUsername.text;
 
     var data = {
       "name": name,
     };
-
-    print(data);
-
-    // EasyLoading.show();
-    // UserProvider().updateUsernameuser(id, data).then((value) {
-    //   var pesan = value.body['message'];
-    //   if (value.statusCode == 200) {
-    //     Get.snackbar(
-    //       "Successs",
-    //       pesan,
-    //       backgroundColor: Colors.green.withOpacity(0.85),
-    //       colorText: Colors.white,
-    //     );
-    //     Get.offAllNamed('/home');
-    //   } else if (value.statusCode == 422) {
-    //     Get.snackbar(
-    //       "Failed",
-    //       pesan,
-    //       backgroundColor: Colors.red.withOpacity(0.50),
-    //       colorText: Colors.white,
-    //     );
-    //   } else if (value.hasError == true) {
-    //     Get.snackbar(
-    //       "Server Not Responding",
-    //       'Gagal menghubungka ke server',
-    //       colorText: Colors.white,
-    //     );
-    //   }
-    //   EasyLoading.dismiss();
-    // });
+    UserProvider().updateUsernameuser(id, data).then((value) {
+      var pesan = value.body['message'];
+      if (value.statusCode == 200) {
+        Get.snackbar(
+          "Successs",
+          pesan,
+          backgroundColor: Colors.green.withOpacity(0.85),
+          colorText: Colors.white,
+        );
+        Get.offAllNamed('/home');
+      } else if (value.statusCode == 422) {
+        Navigator.pop(context);
+        Get.snackbar(
+          "Failed",
+          pesan,
+          backgroundColor: Colors.red.withOpacity(0.50),
+          colorText: Colors.white,
+        );
+      } else if (value.hasError == true) {
+        Navigator.pop(context);
+        Get.snackbar(
+          "Server Not Responding",
+          'Gagal menghubungka ke server',
+          colorText: Colors.white,
+        );
+      }
+    });
   }
 
-  void ChangeEmail() {
+  void ChangeEmail(context) {
     String email = txtEmail.text;
 
     var data = {
       "email": email,
     };
-
-    print(data);
-
-    // EasyLoading.show();
-    // UserProvider().updateEmailuser(id, data).then((value) {
-    //   if (value.statusCode == 200) {
-    //     Get.snackbar(
-    //       "Successs",
-    //       "Email berhasil diubah, lakukan login ulang dengan email baru anda",
-    //       backgroundColor: Colors.green.withOpacity(0.85),
-    //       colorText: Colors.white,
-    //     );
-    //     LogoutController().logout();
-    //   } else if (value.hasError == true) {
-    //     Get.snackbar(
-    //       "Server Not Responding",
-    //       'Gagal menghubungka ke server',
-    //       colorText: Colors.white,
-    //     );
-    //   }
-    //   EasyLoading.dismiss();
-    // });
+    UserProvider().updateEmailuser(id, data).then((value) {
+      if (value.statusCode == 200) {
+        Get.snackbar(
+          "Successs",
+          "Email berhasil diubah, lakukan login ulang dengan email baru anda",
+          backgroundColor: Colors.green.withOpacity(0.85),
+          colorText: Colors.white,
+        );
+        LogoutController().logout(context);
+      } else if (value.hasError == true) {
+        Get.snackbar(
+          "Server Not Responding",
+          'Gagal menghubungka ke server',
+          colorText: Colors.white,
+        );
+      }
+    });
   }
 
-  void ChangeTelp() {
+  void ChangeTelp(context) {
+    customLoading(context);
     String telp = "0${txtnotelp.text}";
 
     var data = {
       "no_hp": telp,
     };
-
-    print(data);
-
-    // EasyLoading.show();
-    // UserProvider().updateNoTelpuser(id, data).then((value) {
-    //   var pesan = value.body['message'];
-    //   if (value.statusCode == 200) {
-    //     Get.snackbar(
-    //       "Successs",
-    //       pesan,
-    //       backgroundColor: Colors.green.withOpacity(0.85),
-    //       colorText: Colors.white,
-    //     );
-    //     Get.offAllNamed('/home');
-    //   } else if (value.statusCode == 422) {
-    //     Get.snackbar(
-    //       "Failed",
-    //       pesan,
-    //       backgroundColor: Colors.red.withOpacity(0.50),
-    //       colorText: Colors.white,
-    //     );
-    //   } else if (value.hasError == true) {
-    //     Get.snackbar(
-    //       "Server Not Responding",
-    //       'Gagal menghubungka ke server',
-    //       colorText: Colors.white,
-    //     );
-    //   }
-    //   EasyLoading.dismiss();
-    // });
+    UserProvider().updateNoTelpuser(id, data).then((value) {
+      var pesan = value.body['message'];
+      if (value.statusCode == 200) {
+        Get.snackbar(
+          "Successs",
+          pesan,
+          backgroundColor: Colors.green.withOpacity(0.85),
+          colorText: Colors.white,
+        );
+        Get.offAllNamed('/home');
+      } else if (value.statusCode == 422) {
+        Navigator.pop(context);
+        Get.snackbar(
+          "Failed",
+          pesan,
+          backgroundColor: Colors.red.withOpacity(0.50),
+          colorText: Colors.white,
+        );
+      } else if (value.hasError == true) {
+        Navigator.pop(context);
+        Get.snackbar(
+          "Server Not Responding",
+          'Gagal menghubungka ke server',
+          colorText: Colors.white,
+        );
+      }
+    });
   }
 
-  void ChangePass() {
+  void ChangePass(context) {
+    customLoading(context);
     String PassLama = txtLastPass.text;
     String passBaru = txtNewPass.text;
     String KonfirmasiPass = txtConfirmNewPass.text;
@@ -130,35 +125,32 @@ class UpdateDataUserController extends GetxController {
       "new_password": passBaru,
       "new_password_confirmation": KonfirmasiPass,
     };
-
-    print(data);
-
-    // EasyLoading.show();
-    // UserProvider().updatePassworduser(id, data).then((value) {
-    //   var pesan = value.body['message'];
-    //   if (value.statusCode == 200) {
-    //     Get.snackbar(
-    //       "Successs",
-    //       pesan,
-    //       backgroundColor: Colors.green.withOpacity(0.85),
-    //       colorText: Colors.white,
-    //     );
-    //     Get.offAllNamed('/home');
-    //   } else if (value.statusCode == 422) {
-    //     Get.snackbar(
-    //       "Failed",
-    //       pesan,
-    //       backgroundColor: Colors.red.withOpacity(0.50),
-    //       colorText: Colors.white,
-    //     );
-    //   } else if (value.hasError == true) {
-    //     Get.snackbar(
-    //       "Server Not Responding",
-    //       'Gagal menghubungka ke server',
-    //       colorText: Colors.white,
-    //     );
-    //   }
-    //   EasyLoading.dismiss();
-    // });
+    UserProvider().updatePassworduser(id, data).then((value) {
+      var pesan = value.body['message'];
+      if (value.statusCode == 200) {
+        Get.snackbar(
+          "Successs",
+          pesan,
+          backgroundColor: Colors.green.withOpacity(0.85),
+          colorText: Colors.white,
+        );
+        Get.offAllNamed('/home');
+      } else if (value.statusCode == 422) {
+        Navigator.pop(context);
+        Get.snackbar(
+          "Failed",
+          pesan,
+          backgroundColor: Colors.red.withOpacity(0.50),
+          colorText: Colors.white,
+        );
+      } else if (value.hasError == true) {
+        Navigator.pop(context);
+        Get.snackbar(
+          "Server Not Responding",
+          'Gagal menghubungka ke server',
+          colorText: Colors.white,
+        );
+      }
+    });
   }
 }

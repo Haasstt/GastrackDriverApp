@@ -111,7 +111,7 @@ class _MyHomePageState_Changename extends State<Changename> {
                       ),
                       onPressed: _isButtonEnabled
                           ? () {
-                              _controller.ChangeName();
+                              _controller.ChangeName(context);
                             }
                           : null,
                       child: const Text(
@@ -240,7 +240,7 @@ class _MyHomePageState_Changeemail extends State<Changeemail> {
                       ),
                       onPressed: _isButtonEnabled
                           ? () {
-                              _controller.ChangeEmail();
+                              _controller.ChangeEmail(context);
                             }
                           : null,
                       child: const Text(
@@ -422,7 +422,7 @@ class _MyHomePageState_Changephone extends State<Changephone> {
                       ),
                       onPressed: _isButtonEnabled
                           ? () {
-                              _controller.ChangeTelp();
+                              _controller.ChangeTelp(context);
                             }
                           : null,
                       child: const Text(
@@ -558,7 +558,7 @@ class _MyHomePageState_Changephone extends State<Changephone> {
                       ),
                       onPressed: _isButtonEnabled
                           ? () {
-                              _controller.ChangeTelp();
+                              _controller.ChangeTelp(context);
                             }
                           : null,
                       child: const Text(
@@ -798,7 +798,7 @@ class _MyHomePageState_Changepassword extends State<Changepassword> {
                       ),
                       onPressed: _isButtonEnabled
                           ? () {
-                              _controller.ChangePass();
+                              _controller.ChangePass(context);
                             }
                           : null,
                       child: const Text(

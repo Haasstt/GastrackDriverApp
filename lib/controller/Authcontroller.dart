@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:gastrack_driver/loading.dart';
 import 'package:gastrack_driver/provider/AuthProvider.dart';
 import 'package:get/get.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:sp_util/sp_util.dart';
 
 class LoginController extends GetxController {
@@ -71,7 +70,6 @@ class LoginController extends GetxController {
             colorText: Colors.white,
           );
         }
-        EasyLoading.dismiss();
       });
     }
   }

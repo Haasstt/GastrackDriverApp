@@ -31,4 +31,8 @@ class UserProvider extends BaseProvider {
   Future<Response> updatePassworduser(id, data) async {
     return put('$Urlupdatedatauser/password/$id', data, headers: header);
   }
+
+  Future<Response> tariksaldo(id, data) async {
+    return post('$Url/penarikanbop/$id', data, headers: header);
+  }
 }
